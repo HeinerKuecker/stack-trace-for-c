@@ -47,9 +47,9 @@ int main(void)
 {
 	puts("Stack trace demo main");
 
-	f2(STACKTRACE_ROOT_SINGLE);
+	f2(STACKTRACE_ARGUMENT_ROOT_SINGLE);
 
-	f4(STACKTRACE_ROOT 0);
+	f4(STACKTRACE_ARGUMENT_ROOT 0);
 
 	return EXIT_SUCCESS;
 }

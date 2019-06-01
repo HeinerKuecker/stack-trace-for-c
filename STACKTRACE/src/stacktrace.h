@@ -8,7 +8,7 @@
 #ifndef STACKTRACE_H_
 #define STACKTRACE_H_
 
-
+// This struct implements a simply linked list to the element of the respective caller
 typedef struct StacktraceElement
 {
 	const char * file;
@@ -19,36 +19,38 @@ typedef struct StacktraceElement
 
 void print_Stacktrace(StacktraceElement_s stacktraceElement);
 
+/***
+ * Macros:
+ *
+ * Each macro is available without a comma for functions that have no further parameters, and with commas for functions that have additional parameters.
+ */
+
+/**
+ * Function arguments, use in function call
+ */
+
+/*
+ * Root arguments, use in root function call
+ */
 
 // Macro for root of stack trace for functions with StacktraceElement as the only parameter
 #ifdef STACKTRACE_ON
-#define STACKTRACE_ROOT_SINGLE (StacktraceElement_s){ __FILE__, __LINE__, __func__, NULL}
+#define STACKTRACE_ARGUMENT_ROOT_SINGLE (StacktraceElement_s){ __FILE__, __LINE__, __func__, NULL}
 #else
-#define STACKTRACE_ROOT_SINGLE
+#define STACKTRACE_ARGUMENT_ROOT_SINGLE
 #endif
 
 // Macro for root of stack trace for functions with StacktraceElement as one of several parameters
 #ifdef STACKTRACE_ON
-#define STACKTRACE_ROOT (StacktraceElement_s){ __FILE__, __LINE__, __func__, NULL},
+#define STACKTRACE_ARGUMENT_ROOT (StacktraceElement_s){ __FILE__, __LINE__, __func__, NULL},
 #else
-#define STACKTRACE_ROOT
+#define STACKTRACE_ARGUMENT_ROOT
 #endif
 
 
-// Macro for stack trace parameter for functions with StacktraceElement as the only parameter
-#ifdef STACKTRACE_ON
-#define STACKTRACE_PARAMETER_SINGLE StacktraceElement_s stacktraceElement
-#else
-#define STACKTRACE_PARAMETER_SINGLE
-#endif
-
-// Macro for stack trace parameter for functions with StacktraceElement as one of several parameters
-#ifdef STACKTRACE_ON
-#define STACKTRACE_PARAMETER StacktraceElement_s stacktraceElement,
-#else
-#define STACKTRACE_PARAMETER
-#endif
-
+/*
+ * Subsequent arguments, use in subsequent function call
+ */
 
 // Macro for subsequent stack trace for functions with StacktraceElement as the only parameter
 #ifdef STACKTRACE_ON
@@ -65,6 +67,27 @@ void print_Stacktrace(StacktraceElement_s stacktraceElement);
 #endif
 
 
+
+/**
+ * Function parameters, use in the function declaration and definition
+ */
+// Macro for stack trace parameter for functions with StacktraceElement as the only parameter
+#ifdef STACKTRACE_ON
+#define STACKTRACE_PARAMETER_SINGLE StacktraceElement_s stacktraceElement
+#else
+#define STACKTRACE_PARAMETER_SINGLE
+#endif
+
+// Macro for stack trace parameter for functions with StacktraceElement as one of several parameters
+#ifdef STACKTRACE_ON
+#define STACKTRACE_PARAMETER StacktraceElement_s stacktraceElement,
+#else
+#define STACKTRACE_PARAMETER
+#endif
+
+/**
+ * Print stack trace
+ */
 #ifdef STACKTRACE_ON
 #define STACKTRACE_PRINT print_Stacktrace(stacktraceElement);
 #else
